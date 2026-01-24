@@ -1,8 +1,29 @@
-# Pokemon 3D Model Showcase
+# 🏛️ Pokémon 3D API: Interactive Showcase
 
-A React-based Pokedex application featuring interactive 3D Pokemon models.
+This is the official demonstration repository for the Pokémon 3D API. It serves as a real-world example of how to integrate web-optimized 3D assets into a responsive web application using React and Google's `<model-viewer>`.
 
-## Getting Started
+## 🌟 Live Demo
+
+[Link to your GitHub Pages URL here]
+
+## 🛠️ Tech Stack
+
+- **Frontend:** React 19, TypeScript, Vite, SASS
+- **3D Rendering:** Google `<model-viewer>` (Web Components)
+- **Data Source:** Pokémon 3D API Server (Merged JSON)
+- **Assets:** Pokémon 3D Assets (.glb models)
+
+## 🚀 Key Features
+
+- **Dynamic Filtering:** Search by Name, ID, Generation (1-9), or Form (Mega, Shiny, G-Max, etc.)
+- **Animation Support:** Interactive modal allows users to swap between available animations (Idle, Walk, Attack, etc.) dynamically
+- **Animated Number Indicator:** Smooth animated Pokémon number display
+- **Not Found Model Indicator:** Visual feedback when 3D model is unavailable
+- **Dark/Light Theme Toggle:** Switch between dark and light modes
+- **Responsive Design:** Fully optimized for mobile, tablet, and desktop viewing
+- **AR Ready:** Built-in Augmented Reality support for compatible mobile browsers
+
+## 📦 How to Run Locally
 
 ### Prerequisites
 
@@ -12,6 +33,8 @@ A React-based Pokedex application featuring interactive 3D Pokemon models.
 ### Installation
 
 ```bash
+git clone https://github.com/deivid11/Showcase.git
+cd Showcase
 npm install
 ```
 
@@ -49,10 +72,18 @@ Run ESLint to check for code issues:
 npm run lint
 ```
 
-## Tech Stack
+## 🤝 Contributing
 
-- React 19
-- TypeScript
-- Vite
-- SASS
-- Google Model Viewer (3D models)
+If you find a bug or have a suggestion for improving the UI or performance:
+
+- Open an issue
+- Or submit a pull request
+
+Contributions are welcome!
+
+## ⚖️ Legal Notice
+
+This project is an unofficial, fan-made resource.
+
+- Pokémon and Pokémon character names are trademarks of Nintendo.
+- This project is intended strictly for educational and non-commercial purposes.
