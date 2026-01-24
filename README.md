@@ -1,78 +1,73 @@
-# 🏛️ Pokémon 3D API: Interactive Showcase
+# React + TypeScript + Vite
 
-This is the official demonstration repository for the [Pokémon 3D API](https://github.com/Pokemon-3D-api). It serves as a real-world example of how to integrate web-optimized 3D assets into a responsive web application using vanilla JavaScript and Google's `<model-viewer>`.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## 🌟 Live Demo
-[Link to your GitHub Pages URL here]
+Currently, two official plugins are available:
 
-## 🛠️ Tech Stack
-- **Frontend:** HTML5, CSS3 (Responsive Grid), Vanilla JavaScript.
-- **3D Rendering:** [Google <model-viewer>](https://modelviewer.dev/) (Web Components).
-- **Data Source:** [Pokémon 3D API Server](https://github.com/Pokemon-3D-api/api-server) (Merged JSON).
-- **Assets:** [Pokémon 3D Assets](https://github.com/Pokemon-3D-api/assets) (.glb models).
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
----
+## React Compiler
 
-## 🔬 The Comparison: Optimized vs. Non-Optimized
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-This showcase provides two distinct experiences to demonstrate the importance of asset pipeline optimization:
+## Expanding the ESLint configuration
 
-### 1. Legacy / Non-Optimized (`index.html`)
-- **Source:** Fetches raw data directly from the GitHub repository.
-- **Performance:** Higher latency and larger file sizes.
-- **Use Case:** Historical reference and testing raw asset fidelity.
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-### 2. Production / Optimized (`opt.html`)
-- **Source:** Fetched via the [Production API Endpoint](https://pokemon-3d-api.onrender.com/v1/pokemon).
-- **Performance:** Uses Draco-compressed meshes and WebP textures.
-- **Use Case:** Recommended for mobile devices and production-grade applications.
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
----
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-## 🚀 Key Features
-- **Dynamic Filtering:** Search by Name, ID, Generation (1-9), or Form (Mega, Shiny, G-Max, etc.).
-- **Animation Support:** Interactive modal allows users to swap between available animations (Idle, Walk, Attack, etc.) dynamically.
-- **Responsive Design:** Fully optimized for mobile, tablet, and desktop viewing.
-- **AR Ready:** Built-in Augmented Reality support for compatible mobile browsers.
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
 
----
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-## 📦 How to run locally
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/Pokemon-3D-api/showcase.git
-   ```
-
-2. **▶️ Open with a Live Server**
-Since this project uses JavaScript `fetch`, it **must be served through a local web server** to avoid CORS issues.
-
-Recommended option:
-- Use the **Live Server** extension in VS Code.
-
-### 📂 Navigate the Showcase
-
-- **Standard version:** `index.html`  
-  Displays the legacy / non-optimized asset pipeline.
-
-- **High-performance version:** `opt.html`  
-  Uses the optimized production API with compressed assets.
-
----
-
-## 🤝 Contributing
-
-If you find a bug or have a suggestion for improving the UI or performance:
-- Open an issue
-- Or submit a pull request
-
-Contributions are welcome!
-
----
-
-## ⚖️ Legal Notice
-
-This project is an **unofficial, fan-made resource**.
-
-- Pokémon and Pokémon character names are trademarks of **Nintendo**.
-- This project is intended **strictly for educational and non-commercial purposes**.
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```

@@ -1,0 +1,1 @@
+export { PokemonModal } from './PokemonModal';

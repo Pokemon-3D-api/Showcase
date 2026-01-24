@@ -1,0 +1,17 @@
+@use 'variables' as *;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: $background-light;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
