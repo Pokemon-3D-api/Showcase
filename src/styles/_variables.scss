@@ -1,12 +1,82 @@
-// Colors
-$primary-color: #4caf50;
-$primary-hover: #45a049;
-$text-dark: #333;
-$text-muted: #666;
-$background-light: #f4f4f9;
-$white: #fff;
-$border-color: #ddd;
-$overlay-bg: rgba(0, 0, 0, 0.5);
+// Pokemon Theme Colors
+$pokedex-red: #dc0a2d;
+$pokedex-red-dark: #a00820;
+$pokedex-red-light: #ff1f4b;
+$pokedex-blue: #3b5ca8;
+$pokedex-yellow: #ffcb05;
+$pokedex-gold: #b3a125;
+
+// Pokemon Type Colors
+$type-normal: #a8a878;
+$type-fire: #f08030;
+$type-water: #6890f0;
+$type-electric: #f8d030;
+$type-grass: #78c850;
+$type-ice: #98d8d8;
+$type-fighting: #c03028;
+$type-poison: #a040a0;
+$type-ground: #e0c068;
+$type-flying: #a890f0;
+$type-psychic: #f85888;
+$type-bug: #a8b820;
+$type-rock: #b8a038;
+$type-ghost: #705898;
+$type-dragon: #7038f8;
+$type-dark: #705848;
+$type-steel: #b8b8d0;
+$type-fairy: #ee99ac;
+
+// Light Theme
+$light-bg-primary: #f0f0f0;
+$light-bg-secondary: #ffffff;
+$light-bg-card: #ffffff;
+$light-text-primary: #1a1a2e;
+$light-text-secondary: #4a4a68;
+$light-text-muted: #6b6b8a;
+$light-border: #d1d1e0;
+$light-shadow: rgba(0, 0, 0, 0.1);
+
+// Dark Theme
+$dark-bg-primary: #1a1a2e;
+$dark-bg-secondary: #16213e;
+$dark-bg-card: #0f3460;
+$dark-text-primary: #eaeaea;
+$dark-text-secondary: #b8b8d0;
+$dark-text-muted: #8888a8;
+$dark-border: #2a2a4e;
+$dark-shadow: rgba(0, 0, 0, 0.4);
+
+// CSS Custom Properties (for runtime theme switching)
+:root {
+  // Light theme (default)
+  --bg-primary: #{$light-bg-primary};
+  --bg-secondary: #{$light-bg-secondary};
+  --bg-card: #{$light-bg-card};
+  --text-primary: #{$light-text-primary};
+  --text-secondary: #{$light-text-secondary};
+  --text-muted: #{$light-text-muted};
+  --border-color: #{$light-border};
+  --shadow-color: #{$light-shadow};
+
+  // Pokemon colors (constant)
+  --pokedex-red: #{$pokedex-red};
+  --pokedex-red-dark: #{$pokedex-red-dark};
+  --pokedex-red-light: #{$pokedex-red-light};
+  --pokedex-blue: #{$pokedex-blue};
+  --pokedex-yellow: #{$pokedex-yellow};
+  --pokedex-gold: #{$pokedex-gold};
+}
+
+[data-theme="dark"] {
+  --bg-primary: #{$dark-bg-primary};
+  --bg-secondary: #{$dark-bg-secondary};
+  --bg-card: #{$dark-bg-card};
+  --text-primary: #{$dark-text-primary};
+  --text-secondary: #{$dark-text-secondary};
+  --text-muted: #{$dark-text-muted};
+  --border-color: #{$dark-border};
+  --shadow-color: #{$dark-shadow};
+}
 
 // Spacing
 $spacing-xs: 0.25rem;
@@ -14,21 +84,33 @@ $spacing-sm: 0.5rem;
 $spacing-md: 1rem;
 $spacing-lg: 1.5rem;
 $spacing-xl: 2rem;
+$spacing-2xl: 3rem;
 
 // Border radius
 $border-radius-sm: 4px;
 $border-radius-md: 8px;
-$border-radius-lg: 10px;
+$border-radius-lg: 12px;
+$border-radius-xl: 20px;
+$border-radius-full: 9999px;
 
 // Shadows
-$shadow-card: 0 4px 6px rgba(0, 0, 0, 0.1);
-$shadow-card-hover: 0 6px 12px rgba(0, 0, 0, 0.15);
+$shadow-sm: 0 2px 4px var(--shadow-color);
+$shadow-md: 0 4px 8px var(--shadow-color);
+$shadow-lg: 0 8px 16px var(--shadow-color);
+$shadow-xl: 0 12px 24px var(--shadow-color);
+$shadow-glow: 0 0 20px rgba($pokedex-red, 0.3);
+$shadow-glow-blue: 0 0 20px rgba($pokedex-blue, 0.3);
 
 // Breakpoints
 $breakpoint-sm: 576px;
 $breakpoint-md: 768px;
 $breakpoint-lg: 992px;
 $breakpoint-xl: 1200px;
+
+// Transitions
+$transition-fast: 0.15s ease;
+$transition-normal: 0.25s ease;
+$transition-slow: 0.4s ease;
 
 // Mixins
 @mixin respond-to($breakpoint) {
@@ -47,4 +129,38 @@ $breakpoint-xl: 1200px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@mixin pokedex-border {
+  border: 3px solid var(--pokedex-red-dark);
+  border-radius: $border-radius-lg;
+  box-shadow:
+    inset 0 2px 4px rgba(255, 255, 255, 0.2),
+    0 4px 8px var(--shadow-color);
+}
+
+@mixin glass-effect {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+@mixin pokeball-button {
+  position: relative;
+  background: linear-gradient(180deg, var(--pokedex-red) 0%, var(--pokedex-red) 45%, #333 45%, #333 55%, #fff 55%, #fff 100%);
+  border-radius: $border-radius-full;
+  border: 2px solid #333;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30%;
+    height: 30%;
+    background: #fff;
+    border: 2px solid #333;
+    border-radius: 50%;
+  }
 }

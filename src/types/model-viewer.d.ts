@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-namespace */
 import 'react';
 
 declare module 'react' {

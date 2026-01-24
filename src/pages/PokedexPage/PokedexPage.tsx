@@ -13,6 +13,7 @@ interface PokedexPageProps {
 export function PokedexPage({ optimized }: PokedexPageProps) {
   const {
     pokemon,
+    totalCount,
     loading,
     error,
     formFilter,
@@ -21,22 +22,36 @@ export function PokedexPage({ optimized }: PokedexPageProps) {
     setGenerationFilter,
     searchQuery,
     setSearchQuery,
+    sortBy,
+    setSortBy,
   } = usePokemon({ optimized });
 
   const [selectedPokemon, setSelectedPokemon] = useState<PokemonWithForm | null>(null);
 
   if (loading) {
     return (
-      <div className="pokedex-page pokedex-page__loading">
-        <p>Loading Pokemon data...</p>
+      <div className="pokedex-page">
+        <div className="pokedex-page__loading">
+          <div className="pokedex-page__pokeball-loader" />
+          <p className="pokedex-page__loading-text">Loading Pokémon data...</p>
+        </div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="pokedex-page pokedex-page__error">
-        <p>{error}</p>
+      <div className="pokedex-page">
+        <div className="pokedex-page__error">
+          <span className="pokedex-page__error-icon">⚠️</span>
+          <p className="pokedex-page__error-text">{error}</p>
+          <button
+            className="pokedex-page__retry-btn"
+            onClick={() => window.location.reload()}
+          >
+            Try Again
+          </button>
+        </div>
       </div>
     );
   }
@@ -50,10 +65,18 @@ export function PokedexPage({ optimized }: PokedexPageProps) {
         onGenerationFilterChange={setGenerationFilter}
         searchQuery={searchQuery}
         onSearchQueryChange={setSearchQuery}
+        sortBy={sortBy}
+        onSortChange={setSortBy}
+        totalCount={totalCount}
+        optimized={optimized}
       />
 
       {pokemon.length === 0 ? (
-        <p className="pokedex-page__empty">No Pokemon found matching your criteria.</p>
+        <div className="pokedex-page__empty">
+          <span className="pokedex-page__empty-icon">🔍</span>
+          <p className="pokedex-page__empty-text">No Pokémon found</p>
+          <p className="pokedex-page__empty-hint">Try adjusting your filters or search query</p>
+        </div>
       ) : (
         <div className="pokedex-page__grid">
           {pokemon.map((poke, index) => (

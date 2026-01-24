@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { fetchPokemonData } from '../services/pokemonApi';
-import type { Pokemon, PokemonWithForm } from '../types/pokemon';
+import type { Pokemon, PokemonWithForm, SortOption } from '../types/pokemon';
 import { generationRanges } from '../types/pokemon';
 
 interface UsePokemonOptions {
@@ -9,6 +9,7 @@ interface UsePokemonOptions {
 
 interface UsePokemonReturn {
   pokemon: PokemonWithForm[];
+  totalCount: number;
   loading: boolean;
   error: string | null;
   formFilter: string;
@@ -17,30 +18,42 @@ interface UsePokemonReturn {
   setGenerationFilter: (value: string) => void;
   searchQuery: string;
   setSearchQuery: (value: string) => void;
+  sortBy: SortOption;
+  setSortBy: (value: SortOption) => void;
 }
 
 export function usePokemon({ optimized }: UsePokemonOptions): UsePokemonReturn {
   const [allPokemon, setAllPokemon] = useState<Pokemon[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [formFilter, setFormFilter] = useState('regular');
+  const [formFilter, setFormFilter] = useState('all');
   const [generationFilter, setGenerationFilter] = useState('1');
   const [searchQuery, setSearchQuery] = useState('');
+  const [sortBy, setSortBy] = useState<SortOption>('id-asc');
 
   useEffect(() => {
+    let cancelled = false;
     setLoading(true);
     setError(null);
 
     fetchPokemonData(optimized)
       .then((data) => {
-        setAllPokemon(data);
-        setLoading(false);
+        if (!cancelled) {
+          setAllPokemon(data);
+          setLoading(false);
+        }
       })
       .catch((err) => {
-        setError('Error loading Pokemon data. Please check the API source or your network connection.');
-        setLoading(false);
-        console.error('Error loading data:', err);
+        if (!cancelled) {
+          setError('Error loading Pokemon data. Please check the API source or your network connection.');
+          setLoading(false);
+          console.error('Error loading data:', err);
+        }
       });
+
+    return () => {
+      cancelled = true;
+    };
   }, [optimized]);
 
   const pokemon = useMemo(() => {
@@ -71,11 +84,28 @@ export function usePokemon({ optimized }: UsePokemonOptions): UsePokemonReturn {
       });
     });
 
+    // Sort the results
+    filtered.sort((a, b) => {
+      switch (sortBy) {
+        case 'id-asc':
+          return a.id - b.id;
+        case 'id-desc':
+          return b.id - a.id;
+        case 'name-asc':
+          return a.name.localeCompare(b.name);
+        case 'name-desc':
+          return b.name.localeCompare(a.name);
+        default:
+          return 0;
+      }
+    });
+
     return filtered;
-  }, [allPokemon, formFilter, generationFilter, searchQuery]);
+  }, [allPokemon, formFilter, generationFilter, searchQuery, sortBy]);
 
   return {
     pokemon,
+    totalCount: pokemon.length,
     loading,
     error,
     formFilter,
@@ -84,5 +114,7 @@ export function usePokemon({ optimized }: UsePokemonOptions): UsePokemonReturn {
     setGenerationFilter,
     searchQuery,
     setSearchQuery,
+    sortBy,
+    setSortBy,
   };
 }

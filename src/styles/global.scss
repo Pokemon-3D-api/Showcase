@@ -1,17 +1,104 @@
 @use 'variables' as *;
 
-* {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  background-color: $background-light;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   min-height: 100vh;
+  transition: background-color $transition-normal, color $transition-normal;
+  line-height: 1.6;
 }
 
 #root {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+// Scrollbar styling
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--pokedex-red);
+  border-radius: $border-radius-full;
+  border: 2px solid var(--bg-secondary);
+
+  &:hover {
+    background: var(--pokedex-red-dark);
+  }
+}
+
+// Selection styling
+::selection {
+  background: var(--pokedex-red);
+  color: #fff;
+}
+
+// Focus styling
+:focus-visible {
+  outline: 2px solid var(--pokedex-yellow);
+  outline-offset: 2px;
+}
+
+// Link styling
+a {
+  color: var(--pokedex-blue);
+  text-decoration: none;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: var(--pokedex-red);
+  }
+}
+
+// Button reset
+button {
+  font-family: inherit;
+}
+
+// Loading animation
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }

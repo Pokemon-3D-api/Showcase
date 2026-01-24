@@ -19,5 +19,9 @@ export default defineConfig([
       ecmaVersion: 2020,
       globals: globals.browser,
     },
+    rules: {
+      // Allow setState in effects for common patterns like resetting state or loading indicators
+      'react-hooks/set-state-in-effect': 'off',
+    },
   },
 ])

@@ -1,43 +1,138 @@
 @use '../../styles/variables' as *;
 
 .pokemon-card {
-  border: 1px solid $border-color;
-  border-radius: $border-radius-md;
-  background: $white;
-  box-shadow: $shadow-card;
-  padding: $spacing-md;
-  text-align: center;
+  background: var(--bg-card);
+  border-radius: $border-radius-lg;
+  overflow: hidden;
   cursor: pointer;
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  transition: all $transition-normal;
+  border: 2px solid var(--border-color);
 
   &:hover {
-    box-shadow: $shadow-card-hover;
-    transform: translateY(-2px);
+    transform: translateY(-4px);
+    box-shadow: $shadow-lg;
+    border-color: var(--pokedex-red);
+
+    .pokemon-card__arrow {
+      transform: translateX(4px);
+    }
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-sm $spacing-md;
+    background: var(--bg-card);
+    border-bottom: 2px solid var(--pokedex-red);
+  }
+
+  &__number {
+    font-family: monospace;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--pokedex-red);
+
+    [data-theme="dark"] & {
+      color: var(--pokedex-red-light);
+    }
+  }
+
+  &__form {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    background: var(--bg-secondary);
+    padding: 2px $spacing-sm;
+    border-radius: $border-radius-sm;
+  }
+
+  &__model-container {
+    height: 180px;
+    background: #f5f5f5;
+    @include flex-center;
+    position: relative;
+
+    [data-theme="dark"] & {
+      background: #2a2a3e;
+    }
+  }
+
+  &__anim-badge {
+    position: absolute;
+    bottom: $spacing-sm;
+    right: $spacing-sm;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 600;
+    padding: 2px $spacing-sm;
+    border-radius: $border-radius-sm;
+    pointer-events: none;
+
+    [data-theme="dark"] & {
+      background: rgba(255, 255, 255, 0.85);
+      color: #1a1a2e;
+    }
   }
 
   &__model {
     width: 100%;
-    height: 300px;
+    height: 100%;
 
     @include respond-to(md) {
-      height: 200px;
+      height: 150px;
     }
   }
 
-  &__id {
-    font-size: 1rem;
-    color: $text-muted;
-    margin-top: $spacing-sm;
+  &__info {
+    padding: $spacing-md;
+    text-align: center;
+    border-top: 1px solid var(--border-color);
   }
 
   &__name {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: $text-dark;
-    margin: $spacing-sm 0 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 $spacing-xs;
+    text-transform: capitalize;
+  }
 
-    @include respond-to(md) {
-      font-size: 1rem;
-    }
+  &__action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-xs;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  &__view-text {
+    opacity: 0.8;
+  }
+
+  &__arrow {
+    transition: transform $transition-fast;
+  }
+
+  &__model-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $spacing-xs;
+    color: var(--text-muted);
+  }
+
+  &__error-icon {
+    font-size: 2.5rem;
+    opacity: 0.5;
+  }
+
+  &__error-text {
+    font-size: 0.75rem;
+    font-weight: 500;
   }
 }

@@ -1,62 +1,287 @@
 @use '../../styles/variables' as *;
 
 .search-bar {
+  padding: $spacing-sm $spacing-lg;
+  background: var(--bg-secondary);
+  border-bottom: 3px solid var(--pokedex-red);
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: $spacing-sm;
-  margin-bottom: $spacing-md;
+  gap: $spacing-md;
+  flex-wrap: wrap;
 
   @include respond-to(md) {
-    flex-direction: column;
+    padding: $spacing-sm $spacing-md;
+    gap: $spacing-sm;
+  }
+
+  // Mode toggle
+  &__mode-toggle {
+    display: flex;
     align-items: stretch;
+    flex-shrink: 0;
   }
 
-  &__select,
-  &__input,
-  &__button {
-    padding: $spacing-sm;
-    border-radius: $border-radius-sm;
-    font-size: 1rem;
-  }
-
-  &__select {
-    border: 1px solid $border-color;
-    background-color: $white;
+  &__mode-btn {
+    padding: 8px 16px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 2px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-muted);
     cursor: pointer;
+    transition: all $transition-fast;
+
+    &:first-child {
+      border-radius: 6px 0 0 6px;
+      border-right: none;
+    }
+
+    &:last-child {
+      border-radius: 0 6px 6px 0;
+    }
+
+    &:hover:not(&--active) {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+    }
+
+    &--active {
+      background: var(--pokedex-red);
+      border-color: var(--pokedex-red);
+      color: #fff;
+    }
+  }
+
+  // Search wrapper
+  &__search-wrapper {
+    position: relative;
+    flex: 1;
+    min-width: 200px;
+    max-width: 350px;
 
     @include respond-to(md) {
+      max-width: none;
+      order: -1;
       width: 100%;
     }
+  }
+
+  &__search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    color: var(--text-muted);
+    pointer-events: none;
   }
 
   &__input {
-    width: 40%;
-    border: 1px solid $border-color;
+    width: 100%;
+    padding: 10px 36px 10px 40px;
+    font-size: 0.95rem;
+    border: 2px solid var(--border-color);
+    border-radius: 6px;
+    background: var(--bg-card);
+    color: var(--text-primary);
+    transition: border-color $transition-fast;
 
-    @include respond-to(md) {
-      width: 100%;
+    &::placeholder {
+      color: var(--text-muted);
     }
 
     &:focus {
-      outline: 2px solid $primary-color;
-      outline-offset: -2px;
+      outline: none;
+      border-color: var(--pokedex-red);
     }
   }
 
-  &__button {
+  &__clear {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--text-muted);
+    color: #fff;
     border: none;
-    background-color: $primary-color;
-    color: $white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    @include flex-center;
+    transition: background $transition-fast;
+
+    svg {
+      width: 10px;
+      height: 10px;
+    }
 
     &:hover {
-      background-color: $primary-hover;
+      background: var(--pokedex-red);
     }
+  }
+
+  // Filters
+  &__filters {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    flex-wrap: wrap;
+  }
+
+  // Result count
+  &__result-count {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 14px;
+    background: var(--pokedex-yellow);
+    color: #333;
+    border-radius: 6px;
+    font-weight: 700;
+    margin-left: auto;
+    flex-shrink: 0;
 
     @include respond-to(md) {
-      width: 100%;
+      margin-left: 0;
     }
+  }
+
+  &__count-number {
+    font-size: 1rem;
+  }
+
+  &__count-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+}
+
+// Game Select
+.game-select {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+
+  &__label {
+    padding: 8px 10px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #fff;
+    background: var(--pokedex-red);
+    border-radius: 6px 0 0 6px;
+    display: flex;
+    align-items: center;
+  }
+
+  &__trigger {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: 2px solid var(--border-color);
+    border-left: none;
+    border-radius: 0 6px 6px 0;
+    background: var(--bg-card);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all $transition-fast;
+    min-width: 90px;
+
+    &:hover {
+      border-color: var(--pokedex-red);
+    }
+
+    &--open {
+      border-color: var(--pokedex-red);
+      border-radius: 0 6px 0 0;
+    }
+  }
+
+  &__value {
+    flex: 1;
+    text-align: left;
+  }
+
+  &__arrow {
+    width: 10px;
+    height: 10px;
+    color: var(--text-muted);
+    transition: transform $transition-fast;
+
+    .game-select__trigger--open & {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: var(--bg-card);
+    border: 2px solid var(--pokedex-red);
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    max-height: 200px;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--pokedex-red);
+      border-radius: 3px;
+    }
+  }
+
+  &__option {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 0.85rem;
+    text-align: left;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    &:hover {
+      background: var(--pokedex-red);
+      color: #fff;
+    }
+
+    &--selected {
+      background: rgba($pokedex-red, 0.1);
+      font-weight: 600;
+      color: var(--pokedex-red);
+
+      &:hover {
+        background: var(--pokedex-red);
+        color: #fff;
+      }
+    }
+
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--border-color);
+    }
+  }
+
+  &__check {
+    font-size: 0.6rem;
   }
 }
