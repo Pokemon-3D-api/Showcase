@@ -6,7 +6,7 @@ import { PokedexPage } from './pages/PokedexPage';
 function App() {
   return (
     <ThemeProvider>
-      <BrowserRouter>
+      <BrowserRouter basename="/Showcase">
         <Header />
         <Routes>
           <Route path="/" element={<PokedexPage optimized={false} />} />
