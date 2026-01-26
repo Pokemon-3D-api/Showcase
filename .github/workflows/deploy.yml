@@ -26,7 +26,7 @@ jobs:
         run: npm install
 
       - name: Build
-        run: npm run build -- --base=/Showcase/
+        run: npm run build 
 
       - name: Upload Artifacts
         uses: actions/upload-pages-artifact@v3
