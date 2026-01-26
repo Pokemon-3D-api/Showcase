@@ -1,0 +1,160 @@
+@use '../../styles/variables' as *;
+
+.pokedex-page {
+  flex: 1;
+  padding: 0 $spacing-md $spacing-xl;
+  background: var(--bg-primary);
+
+  &__loading {
+    @include flex-center;
+    flex-direction: column;
+    gap: $spacing-lg;
+    padding: $spacing-2xl;
+    min-height: 400px;
+  }
+
+  &__pokeball-loader {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    position: relative;
+    background: linear-gradient(
+      180deg,
+      var(--pokedex-red) 0%,
+      var(--pokedex-red) 45%,
+      #333 45%,
+      #333 55%,
+      #fff 55%,
+      #fff 100%
+    );
+    border: 4px solid #333;
+    animation: spin 1s linear infinite;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 24px;
+      height: 24px;
+      background: #fff;
+      border: 4px solid #333;
+      border-radius: 50%;
+    }
+  }
+
+  &__loading-text {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  &__error {
+    @include flex-center;
+    flex-direction: column;
+    gap: $spacing-md;
+    padding: $spacing-2xl;
+    min-height: 400px;
+    text-align: center;
+  }
+
+  &__error-icon {
+    font-size: 4rem;
+  }
+
+  &__error-text {
+    font-size: 1.1rem;
+    color: var(--pokedex-red);
+    max-width: 400px;
+  }
+
+  &__retry-btn {
+    padding: $spacing-md $spacing-xl;
+    background: var(--pokedex-red);
+    color: #fff;
+    border: none;
+    border-radius: $border-radius-full;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all $transition-normal;
+
+    &:hover {
+      background: var(--pokedex-red-dark);
+      transform: translateY(-2px);
+      box-shadow: $shadow-md;
+    }
+  }
+
+  &__empty {
+    @include flex-center;
+    flex-direction: column;
+    gap: $spacing-sm;
+    padding: $spacing-2xl;
+    min-height: 300px;
+    background: var(--bg-secondary);
+    border-radius: $border-radius-xl;
+    margin: $spacing-md;
+    border: 2px dashed var(--border-color);
+  }
+
+  &__empty-icon {
+    font-size: 4rem;
+    opacity: 0.5;
+  }
+
+  &__empty-text {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  &__empty-hint {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: $spacing-lg;
+    padding: $spacing-md;
+
+    @include respond-to(lg) {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: $spacing-md;
+    }
+
+    @include respond-to(md) {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: $spacing-md;
+      padding: $spacing-sm;
+    }
+
+    @include respond-to(sm) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

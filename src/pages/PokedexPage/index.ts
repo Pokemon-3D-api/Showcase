@@ -1,0 +1,1 @@
+export { PokedexPage } from './PokedexPage';

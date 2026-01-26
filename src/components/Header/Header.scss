@@ -1,0 +1,68 @@
+@use '../../styles/variables' as *;
+
+.header {
+  background: linear-gradient(180deg, var(--pokedex-red) 0%, var(--pokedex-red-dark) 100%);
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: $shadow-md;
+  padding: $spacing-sm $spacing-lg;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @include respond-to(md) {
+    padding: $spacing-sm $spacing-md;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+  }
+
+  &__pokeball {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    position: relative;
+    background: linear-gradient(180deg, #fff 0%, #fff 45%, #333 45%, #333 55%, $pokedex-red-light 55%, $pokedex-red-light 100%);
+    border: 2px solid #333;
+    flex-shrink: 0;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 8px;
+      height: 8px;
+      background: #fff;
+      border: 2px solid #333;
+      border-radius: 50%;
+    }
+
+    @include respond-to(md) {
+      width: 24px;
+      height: 24px;
+
+      &::after {
+        width: 6px;
+        height: 6px;
+      }
+    }
+  }
+
+  &__title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 0;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+
+    @include respond-to(md) {
+      font-size: 1.1rem;
+    }
+  }
+}
