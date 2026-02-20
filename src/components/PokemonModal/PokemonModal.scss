@@ -135,6 +135,37 @@
     }
   }
 
+  &__download {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-sm;
+    padding: $spacing-md;
+    border: 2px solid var(--pokedex-red);
+    border-radius: $border-radius-md;
+    background: var(--pokedex-red);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all $transition-normal;
+
+    &:hover:not(:disabled) {
+      background: var(--pokedex-red-dark);
+      border-color: var(--pokedex-red-dark);
+    }
+
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+  }
+
+  &__download-icon {
+    font-size: 1.1rem;
+  }
+
   &__controls {
     display: flex;
     flex-direction: column;

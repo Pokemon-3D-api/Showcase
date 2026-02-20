@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import '@google/model-viewer';
 import type { PokemonWithForm } from '../../types/pokemon';
 import type { ModelViewerElement } from '../../types/model-viewer';
@@ -14,6 +14,7 @@ export function PokemonModal({ pokemon, onClose }: PokemonModalProps) {
   const [animations, setAnimations] = useState<string[]>([]);
   const [selectedAnimation, setSelectedAnimation] = useState('');
   const [modelError, setModelError] = useState(false);
+  const [downloading, setDownloading] = useState(false);
 
   // Reset state when pokemon changes
   useEffect(() => {
@@ -68,6 +69,28 @@ export function PokemonModal({ pokemon, onClose }: PokemonModalProps) {
     };
   }, [pokemon]);
 
+  const handleDownload = useCallback(async () => {
+    if (!pokemon || downloading) return;
+    setDownloading(true);
+    try {
+      const response = await fetch(pokemon.model);
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const formSuffix = pokemon.formName !== 'Regular' ? `_${pokemon.formName}` : '';
+      a.href = url;
+      a.download = `${pokemon.name}${formSuffix}.glb`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch {
+      // silently fail - model may not be downloadable
+    } finally {
+      setDownloading(false);
+    }
+  }, [pokemon, downloading]);
+
   const handleClose = () => {
     const modelViewer = modelViewerRef.current;
     if (modelViewer) {
@@ -118,6 +141,17 @@ export function PokemonModal({ pokemon, onClose }: PokemonModalProps) {
 
           {!modelError && (
             <div className="pokemon-modal__controls">
+              <button
+                className="pokemon-modal__download"
+                onClick={handleDownload}
+                disabled={downloading}
+              >
+                <span className="pokemon-modal__download-icon">
+                  {downloading ? '⏳' : '⬇'}
+                </span>
+                {downloading ? 'Downloading...' : 'Download Model'}
+              </button>
+
               {animations.length > 0 ? (
                 <div className="pokemon-modal__control-group">
                   <label className="pokemon-modal__label">
