@@ -2,10 +2,6 @@
 
 This is the official demonstration repository for the Pokémon 3D API. It serves as a real-world example of how to integrate web-optimized 3D assets into a responsive web application using React and Google's `<model-viewer>`.
 
-## 🌟 Live Demo
-
-[Link to your GitHub Pages URL here]
-
 ## 🛠️ Tech Stack
 
 - **Frontend:** React 19, TypeScript, Vite, SASS
