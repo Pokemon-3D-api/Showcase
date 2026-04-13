@@ -6,11 +6,8 @@ import { PokemonModal } from '../../components/PokemonModal';
 import type { PokemonWithForm } from '../../types/pokemon';
 import './PokedexPage.scss';
 
-interface PokedexPageProps {
-  optimized: boolean;
-}
 
-export function PokedexPage({ optimized }: PokedexPageProps) {
+export function PokedexPage() {
   const {
     pokemon,
     totalCount,
@@ -24,7 +21,7 @@ export function PokedexPage({ optimized }: PokedexPageProps) {
     setSearchQuery,
     sortBy,
     setSortBy,
-  } = usePokemon({ optimized });
+  } = usePokemon();
 
   const [selectedPokemon, setSelectedPokemon] = useState<PokemonWithForm | null>(null);
 
@@ -68,7 +65,6 @@ export function PokedexPage({ optimized }: PokedexPageProps) {
         sortBy={sortBy}
         onSortChange={setSortBy}
         totalCount={totalCount}
-        optimized={optimized}
       />
 
       {pokemon.length === 0 ? (

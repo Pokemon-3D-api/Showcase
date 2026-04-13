@@ -9,8 +9,7 @@ function App() {
       <BrowserRouter basename="/Showcase">
         <Header />
         <Routes>
-          <Route path="/" element={<PokedexPage optimized={false} />} />
-          <Route path="/optimized" element={<PokedexPage optimized={true} />} />
+          <Route path="/" element={<PokedexPage />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

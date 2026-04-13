@@ -3,10 +3,6 @@ import { fetchPokemonData } from '../services/pokemonApi';
 import type { Pokemon, PokemonWithForm, SortOption } from '../types/pokemon';
 import { generationRanges } from '../types/pokemon';
 
-interface UsePokemonOptions {
-  optimized: boolean;
-}
-
 interface UsePokemonReturn {
   pokemon: PokemonWithForm[];
   totalCount: number;
@@ -22,7 +18,7 @@ interface UsePokemonReturn {
   setSortBy: (value: SortOption) => void;
 }
 
-export function usePokemon({ optimized }: UsePokemonOptions): UsePokemonReturn {
+export function usePokemon(): UsePokemonReturn {
   const [allPokemon, setAllPokemon] = useState<Pokemon[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -36,7 +32,7 @@ export function usePokemon({ optimized }: UsePokemonOptions): UsePokemonReturn {
     setLoading(true);
     setError(null);
 
-    fetchPokemonData(optimized)
+    fetchPokemonData()
       .then((data) => {
         if (!cancelled) {
           setAllPokemon(data);
@@ -54,7 +50,7 @@ export function usePokemon({ optimized }: UsePokemonOptions): UsePokemonReturn {
     return () => {
       cancelled = true;
     };
-  }, [optimized]);
+  }, []);
 
   const pokemon = useMemo(() => {
     const filtered: PokemonWithForm[] = [];

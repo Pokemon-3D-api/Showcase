@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { formOptions, generationOptions, sortOptions, type SortOption } from '../../types/pokemon';
 import { GameSelect } from './GameSelect';
 import './SearchBar.scss';
@@ -13,7 +12,6 @@ interface SearchBarProps {
   sortBy: SortOption;
   onSortChange: (value: SortOption) => void;
   totalCount: number;
-  optimized: boolean;
 }
 
 export function SearchBar({
@@ -26,27 +24,9 @@ export function SearchBar({
   sortBy,
   onSortChange,
   totalCount,
-  optimized,
 }: SearchBarProps) {
-  const navigate = useNavigate();
-
   return (
     <div className="search-bar">
-      <div className="search-bar__mode-toggle">
-        <button
-          className={`search-bar__mode-btn ${!optimized ? 'search-bar__mode-btn--active' : ''}`}
-          onClick={() => navigate('/')}
-        >
-          Standard
-        </button>
-        <button
-          className={`search-bar__mode-btn ${optimized ? 'search-bar__mode-btn--active' : ''}`}
-          onClick={() => navigate('/optimized')}
-        >
-          Optimized
-        </button>
-      </div>
-
       <div className="search-bar__search-wrapper">
         <svg className="search-bar__search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <circle cx="11" cy="11" r="8" />
