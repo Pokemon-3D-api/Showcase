@@ -3,7 +3,7 @@ import type { Pokemon } from '../types/pokemon';
 
 const API_ENDPOINTS = {
   optimized: 'https://pokemon-3d-api.onrender.com/v1/pokemon',
-  nonOptimized: 'https://raw.githubusercontent.com/Pokemon-3D-api/api-server/refs/heads/main/server/json/Merged.json',
+  nonOptimized: 'https://raw.githubusercontent.com/Pokemon-3D-api/api-server/refs/heads/main/server/json/MergedOpt.json',
 };
 
 export async function fetchPokemonData(optimized: boolean): Promise<Pokemon[]> {
