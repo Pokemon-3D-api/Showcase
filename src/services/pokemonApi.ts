@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { Pokemon } from '../types/pokemon';
 
-const API_URL = 'https://raw.githubusercontent.com/Pokemon-3D-api/api-server/refs/heads/main/server/json/MergedOpt.json';
+const API_URL = 'https://pokemon-3d-api.onrender.com/v1/pokemon';
 
 export async function fetchPokemonData(): Promise<Pokemon[]> {
   const response = await axios.get(API_URL);
